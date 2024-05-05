@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.mmm {
+  background-image: url('./assets/Background_shokfm.jpeg');
+  background-size: cover;
+  background-position: center;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -31,3 +37,17 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes fadeIn {
+  from {
+    opacity:0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
