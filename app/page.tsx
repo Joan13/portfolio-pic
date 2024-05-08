@@ -2,10 +2,23 @@
 
 import { useState } from "react";
 import "./globals.css";
+import { FaLinkedin, FaSquareXTwitter } from "react-icons/fa6";
+import { RiInstagramFill } from "react-icons/ri";
 
 export default function Home() {
 
   const [visible, setVisible] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const sendEmail=()=>{
+    fetch('./api/emails',{
+      method: 'POST'
+    })
+    .then(response=>response.json())
+    .then(data=> console.log(data) )
+    .catch(error=>console.log("Catch"))
+    .finally(()=>console.log("Finally"))
+  }
 
   return (
     <div className="mmm h-screen flex">
@@ -20,14 +33,14 @@ export default function Home() {
 
           <div className="flex items-center"
             style={{ position: 'absolute', right: 50 }}>
-            <a className="ml-2 mr-2">
-              <img src="./favicon.ico" className="w-6 h-6" />
+            <a className="ml-2 mr-2" href="https://linkedin.com/in/shok-fm">
+              <FaLinkedin color="#4ca4ec" />
             </a>
             <a className="ml-2 mr-2">
-              <img src="./favicon.ico" className="w-6 h-6" />
+              <FaSquareXTwitter color="#4ca4ec" href="https://twitter.com/shok_fm" />
             </a>
-            <a className="ml-2 mr-2">
-              <img src="./favicon.ico" className="w-6 h-6" />
+            <a className="ml-2 mr-2" href="https://instagram.com/shok_fm">
+              <RiInstagramFill color="#4ca4ec" />
             </a>
           </div>
         </div>
@@ -49,7 +62,9 @@ export default function Home() {
             <div className="flex items-center justify-between mt-4">
               <div onClick={() => setVisible(false)} className=" hover:bg-black text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300 cursor-pointer">CLOSE</div>
 
-              <div onClick={() => setVisible(true)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300 cursor-pointer">SEND</div>
+              {!sending ?<div onClick={() => sendEmail()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300 cursor-pointer">SEND</div>
+              :
+              <div className="text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300">Processing...</div>}
             </div>
 
           </div>

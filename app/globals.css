@@ -8,6 +8,14 @@
   background-position: center;
 }
 
+@media only screen and (max-width: 800px) {
+  .mmm {
+    /* background-image: url('./assets/Background_shokfm.jpeg');
+  background-size: cover; */
+    background-position-x: -13cm;
+  }
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
