@@ -33,7 +33,7 @@ export default function Home() {
         setMessage("");
         setNamee("");
         setSending(false);
-  })
+      })
       .catch(error => setSending(false))
     // .finally(()=>console.log("Finally"))
   }
@@ -88,9 +88,7 @@ export default function Home() {
                 :
                 <div className="text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300">Processing...</div>}
             </div>
-
           </div>
-
         </div> : null}
     </div>
   );
