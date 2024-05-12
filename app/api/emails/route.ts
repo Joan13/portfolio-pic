@@ -1,30 +1,24 @@
-import { SendEmail } from "@/app/utils/mail.utils"
+import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server"
+import { Resend } from "resend"
 
-export async function POST() {
-    const sender = {
-        name: 'Name Sender',
-        address: 'no-reply@example.com'
-    }
-
-    const recipients = [{
-        name: 'Joan Migani',
-        address: 'joan.migani@gmail.com'
-    }]
-
+export async function POST(request: Request, response: NextApiResponse) {
+    const dataa = await request.json();
     try {
-        const result = await SendEmail({
-            sender,
-            recipients,
-            subject: 'message from user',
-            message: "Welcome to our platform"
+        const resend = new Resend('re_7UyaeNXH_2KSjnrVqizUimLCjkibSoqfK');
+        const { data } = await resend.emails.send({
+            from: dataa.name + ' <onboarding@resend.dev>',
+            to: 'joan.agisha@gmail.com',
+            subject: 'Contact',
+            html:
+                '<div>'
+                + '<h3>' + dataa.name + ' (' + dataa.email + ')</h3>'
+                + '<div>' + dataa.message + '</div>'
+                + '</div>'
         })
-
-        return Response.json({
-            accepted: result.accepted
-        })
+        return NextResponse.json({ request })
     } catch (error) {
-        return Response.json({
-            message: "No"
-        })
+        return NextResponse.json({ 'message': "Error" })
     }
 }
+

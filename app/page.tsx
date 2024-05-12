@@ -4,20 +4,38 @@ import { useState } from "react";
 import "./globals.css";
 import { FaLinkedin, FaSquareXTwitter } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
+import { SendEmail } from "./utils/mail.utils";
 
 export default function Home() {
 
   const [visible, setVisible] = useState(false);
   const [sending, setSending] = useState(false);
+  const [namee, setNamee] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
-  const sendEmail=()=>{
-    fetch('./api/emails',{
-      method: 'POST'
+  const sendEmail = () => {
+    setSending(true)
+    fetch('./api/emails', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: namee,
+        email: email,
+        message: message
+      }),
+      headers: {
+        'content-type': 'application/json'
+      }
     })
-    .then(response=>response.json())
-    .then(data=> console.log(data) )
-    .catch(error=>console.log("Catch"))
-    .finally(()=>console.log("Finally"))
+      .then(response => response.json())
+      .then(data => {
+        setEmail("");
+        setMessage("");
+        setNamee("");
+        setSending(false);
+  })
+      .catch(error => setSending(false))
+    // .finally(()=>console.log("Finally"))
   }
 
   return (
@@ -52,19 +70,23 @@ export default function Home() {
 
           <div className="mx-auto max-w-screen-lg md:w-1/3 md:px-1 lg:px-1 xl:px-2">
             <div className="mb-4">
-              <input placeholder="Names" name="name" className="text-white w-full pl-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)', outline: 'none', height: 50, borderBottomWidth: 1, borderColor: 'white', display: 'block' }} />
+              <input value={namee} onChange={e => setNamee(e.target.value)}
+                placeholder="Names" name="name" className="text-white w-full pl-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)', outline: 'none', height: 50, borderBottomWidth: 1, borderColor: 'white', display: 'block' }} />
 
-              <input placeholder="Email adress" name="name" className="text-white w-full pl-2 mt-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)', outline: 'none', height: 50, borderBottomWidth: 1, borderColor: 'white' }} />
+              <input value={email} onChange={e => setEmail(e.target.value)}
+                placeholder="Email adress" name="name" className="text-white w-full pl-2 mt-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)', outline: 'none', height: 50, borderBottomWidth: 1, borderColor: 'white' }} />
             </div>
 
-            <textarea placeholder="Type message here" className="text-black w-full bg-white rounded-md pl-2 pt-2 pb-2 pr-2 mh-18 h-full" style={{ outline: 'none' }}></textarea>
+            <textarea value={message}
+              onChange={e => setMessage(e.target.value)}
+              placeholder="Type message here" className="text-black w-full bg-white rounded-md pl-2 pt-2 pb-2 pr-2 mh-18 h-full" style={{ outline: 'none' }}></textarea>
 
             <div className="flex items-center justify-between mt-4">
               <div onClick={() => setVisible(false)} className=" hover:bg-black text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300 cursor-pointer">CLOSE</div>
 
-              {!sending ?<div onClick={() => sendEmail()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300 cursor-pointer">SEND</div>
-              :
-              <div className="text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300">Processing...</div>}
+              {!sending ? <div onClick={() => sendEmail()} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300 cursor-pointer">SEND</div>
+                :
+                <div className="text-white font-bold py-2 rounded-3xl w-36 text-center transition-colors duration-300">Processing...</div>}
             </div>
 
           </div>
