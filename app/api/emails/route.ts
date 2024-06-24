@@ -8,7 +8,7 @@ export async function POST(request: Request, response: NextApiResponse) {
         const resend = new Resend('re_7UyaeNXH_2KSjnrVqizUimLCjkibSoqfK');
         const { data } = await resend.emails.send({
             from: dataa.name + ' <onboarding@resend.dev>',
-            to: 'shok.fm@gmail.com',
+            to: 'joan.migani.13@gmail.com',
             subject: 'Contact',
             html:
                 '<div>'

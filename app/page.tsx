@@ -5,6 +5,7 @@ import "./globals.css";
 import { FaLinkedin, FaSquareXTwitter } from "react-icons/fa6";
 import { RiInstagramFill } from "react-icons/ri";
 import { SendEmail } from "./utils/mail.utils";
+import axios from "axios";
 
 export default function Home() {
 
@@ -14,28 +15,76 @@ export default function Home() {
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
-  const sendEmail = () => {
+  const sendEmail = async () => {
     setSending(true)
-    fetch('./api/emails', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: namee,
-        email: email,
-        message: message
-      }),
-      headers: {
-        'content-type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
+    // fetch('./api/emails', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     name: namee,
+    //     email: email,
+    //     message: message
+    //   }),
+    //   headers: {
+    //     'content-type': 'application/json',
+    //     Accept: 'application/json'
+    //   }
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setEmail("");
+    //     setMessage("");
+    //     setNamee("");
+    //     setSending(false);
+    //   })
+    //   .catch(error => setSending(false))
+    // .finally(()=>console.log("Finally"))
+
+    // fetch("http://shok.fm/send_mail/mail.php", {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     "sender": "francis@shok.fm",
+    //     "sender_name": namee,
+    //     "subject": "",
+    //     "message": message,
+    //     "recipient": email
+    //   }),
+    //   headers: {
+    //     'content-type': 'application/json',
+    //     Accept: 'application/json'
+    //   }
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setEmail("");
+    //     setMessage("");
+    //     setNamee("");
+    //     setSending(false);
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //     setSending(false);
+    //   })
+    // }
+
+    let formData = new FormData();
+
+    formData.append("sender", "francis@shok.fm");
+    formData.append("sender_name", namee);
+    formData.append("subject", "Contact - " + email);
+    formData.append("message", message);
+    formData.append("recipient", "shok.fm@gmail.com");
+
+    await axios.post("http://shok.fm/send_mail/mail.php", formData)
+      .then((json) => {
         setEmail("");
         setMessage("");
         setNamee("");
         setSending(false);
       })
-      .catch(error => setSending(false))
-    // .finally(()=>console.log("Finally"))
+      .catch(error => {
+        console.log(error)
+        setSending(false);
+      })
   }
 
   return (
