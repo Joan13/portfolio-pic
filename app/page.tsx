@@ -72,7 +72,7 @@ export default function Home() {
     formData.append("sender_name", namee);
     formData.append("subject", "Contact - " + email);
     formData.append("message", message);
-    formData.append("recipient", "shok.fm@gmail.com");
+    formData.append("recipient", "jonaska@live.com");
 
     await axios.post("http://shok.fm/send_mail/mail.php", formData)
       .then((json) => {
@@ -101,13 +101,13 @@ export default function Home() {
           <div className="flex items-center"
             style={{ position: 'absolute', right: 50 }}>
             <a className="ml-2 mr-2" href="https://linkedin.com/in/shok-fm">
-              <FaLinkedin color="#4ca4ec" />
+              <FaLinkedin color="#4ca4ec" size={30} />
             </a>
             <a className="ml-2 mr-2">
-              <FaSquareXTwitter color="#4ca4ec" href="https://twitter.com/shok_fm" />
+              <FaSquareXTwitter size={30} color="#4ca4ec" href="https://twitter.com/shok_fm" />
             </a>
             <a className="ml-2 mr-2" href="https://instagram.com/shok_fm">
-              <RiInstagramFill color="#4ca4ec" />
+              <RiInstagramFill color="#4ca4ec" size={30} />
             </a>
           </div>
         </div>
@@ -120,7 +120,7 @@ export default function Home() {
           <div className="mx-auto max-w-screen-lg md:w-1/3 md:px-1 lg:px-1 xl:px-2">
             <div className="mb-4">
               <input value={namee} onChange={e => setNamee(e.target.value)}
-                placeholder="Names" name="name" className="text-white w-full pl-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)', outline: 'none', height: 50, borderBottomWidth: 1, borderColor: 'white', display: 'block' }} />
+                placeholder="Names" name="name" className="text-white w-full pl-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)', outline: 'none', height: 50, borderBottomWidth: 1, borderColor: 'white', display: 'block', fontFamily: "poppins" }} />
 
               <input value={email} onChange={e => setEmail(e.target.value)}
                 placeholder="Email adress" name="name" className="text-white w-full pl-2 mt-4" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)', outline: 'none', height: 50, borderBottomWidth: 1, borderColor: 'white' }} />
